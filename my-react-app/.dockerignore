@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+.git
+.gitignore
+
+python-backend/.venv
+python-backend/__pycache__
+python-backend/.pytest_cache
+python-backend/.cache

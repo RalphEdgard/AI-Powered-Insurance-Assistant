@@ -1,0 +1,33 @@
+services:
+  backend:
+    build:
+      context: ./python-backend
+      dockerfile: Dockerfile
+    container_name: careconnect-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - CARECONNECT_TEST_MODE=0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./python-backend/app:/app/app
+      - ./python-backend/sample-data:/app/sample-data
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: careconnect-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
