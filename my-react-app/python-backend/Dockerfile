@@ -4,12 +4,10 @@ WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-
 ENV HF_HOME=/app/.cache/huggingface
 ENV TRANSFORMERS_CACHE=/app/.cache/huggingface
 ENV SENTENCE_TRANSFORMERS_HOME=/app/.cache/sentence-transformers
 ENV OLLAMA_BASE_URL=http://host.docker.internal:11434
-ENV CARECONNECT_TEST_MODE=1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends build-essential curl \
@@ -17,19 +15,9 @@ RUN apt-get update \
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
-    && pip install --no-cache-dir -r requirements.txt
-
-RUN python - <<'PY'
-from sentence_transformers import SentenceTransformer
-
-SentenceTransformer(
-    "sentence-transformers/all-MiniLM-L6-v2",
-    cache_folder="/app/.cache/sentence-transformers",
-)
-print("Downloaded sentence-transformers/all-MiniLM-L6-v2")
-PY
+RUN pip3 install --no-cache-dir --upgrade pip3 \
+    && pip3 install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip3 install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 COPY sample-data ./sample-data

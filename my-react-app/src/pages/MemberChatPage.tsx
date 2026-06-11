@@ -1,11 +1,11 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
-  Card,
-  IntentBadge,
-  MetricCard,
-  RouteBadge,
-  SectionLabel,
-  Spinner,
+Card,
+IntentBadge,
+MetricCard,
+RouteBadge,
+SectionLabel,
+Spinner,
 } from "../components/ui";
 import { getPlans, submitConversationQuery } from "../services/careConnectApi";
 import type {
@@ -39,9 +39,7 @@ export default function MemberChatPage() {
   const [plans, setPlans] = useState<PlanSummary[]>([]);
   const [planId, setPlanId] = useState("EXAMPLE-HMO-2026");
   const [question, setQuestion] = useState(exampleQuestions[0]);
-  const [response, setResponse] = useState<ConversationQueryResponse | null>(
-    null
-  );
+  const [response, setResponse] = useState<ConversationQueryResponse | null>(null);
   const [loadingPlans, setLoadingPlans] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
